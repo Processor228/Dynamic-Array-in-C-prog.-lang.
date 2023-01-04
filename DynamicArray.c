@@ -100,19 +100,19 @@ static void q_SortHelper(struct dynamicArray* v, int start, int end){
     int R = end;
     int L = start;
     while (R > L){
-        if(pos(v, L) > pivot && pivot > pos(v,R)){
+        if(pos(v, L) >= pivot && pivot >= pos(v,R)){
             int temp = pos(v, L);
             replace(v, L, pos(v, R));
             replace(v, R, temp);
+            R--;
+            L++;
         }
         if(pos(v, R) >= pivot) R -= 1;
         if(pos(v, L) <= pivot) L += 1;
     }
-    int temp = pos(v, (start + end)/2);
-    replace(v, (start + end)/2, pos(v, R));
-    replace(v, R, temp);
+    while(pos(v, R) > pivot) R--;
 
-    q_SortHelper(v, 0, R);
+    q_SortHelper(v, start, R);
     q_SortHelper(v, R + 1, end);
 }
 
